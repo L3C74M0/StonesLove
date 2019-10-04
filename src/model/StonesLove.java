@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class StonesLove {
+	static Node iq;
 
 	public static void main(String[] args) throws IOException {
 
 		// Pos 0 = (dia = 1)
 		// pos 1 = sumatoria
-
+		iq = new Node(0, 0);
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		String line = br.readLine();
@@ -63,6 +64,7 @@ public class StonesLove {
 			}
 
 			Node temp = new Node(izq.day + der.day, izq.suma + der.suma);
+			iq = temp;
 			return temp;
 		}
 	}
