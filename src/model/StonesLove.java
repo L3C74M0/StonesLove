@@ -32,27 +32,29 @@ public class StonesLove {
 		suma = 0;
 		output = new int[amountDays];
 
-		cuantosDiasTardo(array);
+		cuantosDiasTardo(array, amountQueries);
 
 		for (int i = 0; i < amountQueries; i++) {
 			System.out.println(searchDays(output, Integer.parseInt(consultas[i])));
 		}
 	}
 
-	public static void cuantosDiasTardo(int[] array) {
-		cuantosDiasTardo(array, 0, array.length - 1);
+	public static void cuantosDiasTardo(int[] array, int posLimit) {
+		cuantosDiasTardo(array, 0, array.length - 1, posLimit);
 	}
 
-	private static void cuantosDiasTardo(int[] array, int i, int j) {
+	private static void cuantosDiasTardo(int[] array, int i, int j, int posLimit) {
 		int m = (i + j) / 2;
 
 		if (i == j) {
-			suma += array[i];
-			output[i] = suma;
+			if (i <= posLimit) {
+				suma += array[i];
+				output[i] = suma;
+			}
 		} else {
-			cuantosDiasTardo(array, i, m);
+			cuantosDiasTardo(array, i, m, posLimit);
 
-			cuantosDiasTardo(array, m + 1, j);
+			cuantosDiasTardo(array, m + 1, j, posLimit);
 		}
 	}
 
@@ -61,21 +63,25 @@ public class StonesLove {
 	}
 
 	private static int searchDays(int[] vector, int i, int j, int toSearch) {
-		int izq;
-		int der;
-		int m = (i + j) / 2;
-
 		if (i == j) {
-			return i;
+			return i+1;
 		} else {
+			int izq;
+			int der;
+			int m = (i + j) / 2;
+			
 			if (vector[m] == toSearch) {
 				return m + 1;
 			} else {
 				if (vector[m] < toSearch) {
-					if (toSearch < vector[m + 1]) {
-						return m + 2;
+					if ((m + 1) <= vector.length - 1) {
+						if (toSearch < vector[m + 1]) {
+							return m + 2;
+						} else {
+							return der = searchDays(vector, m + 1, j, toSearch);
+						}
 					} else {
-						return der = searchDays(vector, m + 1, j, toSearch);
+						return m + 1;
 					}
 				} else {
 					if ((m - 1) >= 0) {
@@ -87,7 +93,6 @@ public class StonesLove {
 					} else {
 						return m + 1;
 					}
-
 				}
 			}
 		}
