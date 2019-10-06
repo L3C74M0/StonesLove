@@ -35,7 +35,7 @@ public class StonesLove {
 		cuantosDiasTardo(array);
 
 		for (int i = 0; i < amountQueries; i++) {
-			System.out.println(searchDays(output,Integer.parseInt(consultas[i])));
+			System.out.println(searchDays(output, Integer.parseInt(consultas[i])));
 		}
 	}
 
@@ -78,11 +78,16 @@ public class StonesLove {
 						return der = searchDays(vector, m + 1, j, toSearch);
 					}
 				} else {
-					if (toSearch > vector[m - 1]) {
-						return m + 1;
+					if ((m - 1) >= 0) {
+						if (toSearch > vector[m - 1]) {
+							return m + 1;
+						} else {
+							return izq = searchDays(vector, i, m, toSearch);
+						}
 					} else {
-						return izq = searchDays(vector, i, m, toSearch);
+						return m + 1;
 					}
+
 				}
 			}
 		}
